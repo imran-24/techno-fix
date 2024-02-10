@@ -20,7 +20,7 @@ const Button = ({
     className={clsx(`
         flex 
         justify-center 
-        rounded-md 
+        rounded-[3px]
         px-3 
         py-2 
         text-sm 
@@ -35,7 +35,7 @@ const Button = ({
         active && 'bg-black',
         danger && 'bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600',
         !secondary && !danger && 'bg-sky-500 hover:bg-sky-600 focus-visible:outline-sky-600',
-        secondary && !active  && 'ring-[1px] ring-neutral-300 hover:bg-neutral-100'
+        secondary && !active  && 'ring-[.8px] ring-neutral-400/50 hover:bg-neutral-100'
       )}
       >
       {children}

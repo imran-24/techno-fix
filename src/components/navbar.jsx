@@ -7,19 +7,23 @@ import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import Button from "./button";
 import {Input} from "./input/input";
 import CreateUserModal from "./modals/create-user-modal";
+import Select from "./input/select";
+import { sortList } from "../utils";
 
 const Navbar = () => {
 
     const scrolled = useScrollTop()
     const inputRef = useRef(null);
+    let [searchParams, setSearchParams] = useSearchParams();
+    const sortParams = searchParams.get("sort");
     const [search, setSearch] = useState("");
     const [isEditing, setIsEditing] = useState(false);
     const [open, setOpen] = useState(false)
+    const [sortState, setSortState] = useState(sortList.filter(sort => sort.value === sortParams)[0] || null);
 
     const {id} = useParams();
     const buttonRef = useRef(null);
     const navigate = useNavigate();
-    let [searchParams, setSearchParams] = useSearchParams();
 
     const enableInput = () => {
         setIsEditing(true);
@@ -51,6 +55,11 @@ const Navbar = () => {
         setSearchParams({search: search});
         disableInput();
     }
+
+    const handleSort = (value) => {
+        setSearchParams({sort: value.value});
+        setSortState(value)
+    };
 
     const onKeyDown = (event) => {
         if (event.key === "Enter") {
@@ -91,6 +100,13 @@ const Navbar = () => {
             space-x-2
             
             ">  
+                {!id && <Select
+                
+                label={"Sort:"}
+                options={sortList}
+                onChange={(value)=> handleSort(value)}
+                value={sortState}
+                />}
                 {!id && 
                 (isEditing
                 ?   <div className="flex items-center space-x-2">
@@ -124,12 +140,6 @@ const Navbar = () => {
                 type={'button'}>
                     Add User
                 </Button>}
-                {/* {!id && <Select
-                label={"Sort:"}
-                options={sort}
-                onChange={(value)=> setSortState(value)}
-                value={sortState}
-                />} */}
             </div>
             {
                 id && 

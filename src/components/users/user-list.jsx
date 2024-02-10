@@ -11,7 +11,8 @@ const UserList = () => {
     const navigate = useNavigate();
     let [searchParams] = useSearchParams();
     const search = searchParams.get("search");
-    
+    const sortParams = searchParams.get('sort');
+
     const searchUser = useCallback(() => {
         const names = search.split(" ");
         const filterData = data.users?.filter(user => {
@@ -27,20 +28,77 @@ const UserList = () => {
 
     }, [data, search]);
 
-
     useEffect(()=>{
         if(!search){
             setFilterData([])
         }
     },[search])
+
+    const sortByName = (data)=>{
+        data?.sort((a, b) => {
+            // Convert names to lowercase for case-insensitive sorting
+            const nameA = a.firstName.toLowerCase();
+            const nameB = b.firstName.toLowerCase();
+          
+            // Compare the names
+            if (nameA < nameB) return -1; // nameA comes before nameB
+            if (nameA > nameB) return 1; // nameA comes after nameB
+            return 0; // names are equal
+          });
+    }
+
+    const sortByCompanyName = (data)=>{
+        data?.sort((a, b) => {
+            // Convert names to lowercase for case-insensitive sorting
+            const nameA = a.company.name.toLowerCase();
+            const nameB = b.company.name.toLowerCase();
+          
+            // Compare the names
+            if (nameA < nameB) return -1; // nameA comes before nameB
+            if (nameA > nameB) return 1; // nameA comes after nameB
+            return 0; // names are equal
+          });
+    }
+
+    const sortByEmail = (data)=>{
+        data?.sort((a, b) => {
+            // Convert names to lowercase for case-insensitive sorting
+            const nameA = a.email.toLowerCase();
+            const nameB = b.email.toLowerCase();
+          
+            // Compare the names
+            if (nameA < nameB) return -1; // nameA comes before nameB
+            if (nameA > nameB) return 1; // nameA comes after nameB
+            return 0; // names are equal
+          });
+    }
+
+
+    useEffect(()=>{
+        console.log("hi")
+        if(sortParams === 'name'){
+            console.log("name")
+            sortByName(data.users)
+        }
+        else if(sortParams === "company"){
+            console.log("company")
+            sortByCompanyName(data.users)
+        }
+        else if(sortParams === "email"){
+            console.log("email")
+            sortByEmail(data.users)
+        }
+
+    },[sortParams, data])
     
     useEffect(() => {
+        console.log("fetch data")
         const fetchData = async () => {
           setData(await getUsers())
           setFilterData([])
         };
         fetchData(); 
-    }, [navigate]);
+    }, []);
 
     useEffect(() => {
         if (search) {

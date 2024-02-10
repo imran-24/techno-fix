@@ -11,8 +11,8 @@ const Select= ({
     required
 })=>{
     return(
-        <div className='w-38 flex items-center gap-x-2'>
-            <label
+        <div className='w-24 hidden  md:flex items-center gap-x-2'>
+            {/* <label
             className='text-xs 
             font-medium
             leading-6
@@ -20,7 +20,7 @@ const Select= ({
             text-gray-900'
             >
                 {label}
-            </label>
+            </label> */}
             <div className="w-full">
                 <ReactSelect 
                     placeholder="Sort..."

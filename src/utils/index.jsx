@@ -1,5 +1,5 @@
 
-export const sort = [
+export const sortList = [
     {
         label: "Name",
         value: "name",

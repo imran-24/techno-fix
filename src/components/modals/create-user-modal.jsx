@@ -93,7 +93,7 @@ const CreateUserModal = ({
                 mt-10
                 space-y-4'>
                     <Input
-                    className="focus-visible:ring-black placeholder:text-[13px] focus-visible:ring-2"
+                    className="focus-visible:ring-black border-none shadow-none ring-[.8px] ring-neutral-400/50  placeholder:text-[13px] focus-visible:ring-2"
                     placeholder="First name"
                     onChange={()=>{}}
                     type={"text"}
