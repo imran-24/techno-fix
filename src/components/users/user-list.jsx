@@ -14,7 +14,6 @@ const UserList = ({data, setData}) => {
     const sortParams = searchParams.get('sort');
 
   const sortByName = ()=>{
-    console.log("hi")
     const sortedUserList = data.slice().sort((a, b) => {
     const nameA = a.firstName.toLowerCase();
     const nameB = b.firstName.toLowerCase();
@@ -66,10 +65,10 @@ const UserList = ({data, setData}) => {
           sortByEmail()
         }
     },[sortParams])
-
+    
     const searchUser = useCallback(() => {
         const names = search.split(" ");
-        const filterData = data.users?.filter(user => {
+        const filterData = data?.filter(user => {
               const firstNameLower = user.firstName.toLowerCase();
               const lastNameLower = user.lastName.toLowerCase();
               
@@ -122,9 +121,12 @@ const UserList = ({data, setData}) => {
                 <Button 
                 onClick={()=> navigate('/')}
                 secondary>
+                    <div className="flex items-center">
                     Clear search
+                    <img src="./search.png" className="ml-2 h-3 w-3 object-contain" />
+                    </div>
                 </Button>
-                <p className="text-neutral-500">No match found</p>
+                <p className="text-neutral-500 text-[13px]  ">No Match Found</p>
             </div>
         }
         </>
