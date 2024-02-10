@@ -3,7 +3,7 @@ import ReactSelect from 'react-select'
 import PropTypes from 'prop-types';
 
 const Select= ({
-    label,
+
     value,
     options,
     onChange,
@@ -48,7 +48,6 @@ const Select= ({
 }
 
 Select.propTypes = {
-    label: PropTypes.string,
     value: PropTypes.object,
     onChange: PropTypes.func,
     options: PropTypes.array,
