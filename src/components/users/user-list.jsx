@@ -1,17 +1,71 @@
 import { useCallback, useEffect, useState } from "react";
-import { getUsers } from "../../../actions/get-users"
 import UserItem from "./user-item";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Button from "../button";
+import PropTypes from 'prop-types';
 
-const UserList = () => {
-    const [data, setData] = useState([]); // Initial state is null
+const UserList = ({data, setData}) => {
     const [filterData, setFilterData] = useState([]); // Initial state is null
     
     const navigate = useNavigate();
     let [searchParams] = useSearchParams();
     const search = searchParams.get("search");
+
     const sortParams = searchParams.get('sort');
+
+  const sortByName = ()=>{
+    console.log("hi")
+    const sortedUserList = data.slice().sort((a, b) => {
+    const nameA = a.firstName.toLowerCase();
+    const nameB = b.firstName.toLowerCase();
+  
+    if (nameA < nameB) return -1; 
+    if (nameA > nameB) return 1; 
+    return 0; 
+    });
+    setData(sortedUserList)
+
+  }
+
+    const sortByCompanyName =()=>{
+      
+      const sortedUserList = data.slice().sort((a, b) => {
+      const nameA = a.company.name.toLowerCase();
+      const nameB = b.company.name.toLowerCase();
+    
+      if (nameA < nameB) return -1; 
+      if (nameA > nameB) return 1;
+      return 0; 
+      });
+      setData(sortedUserList);
+
+}
+
+  const sortByEmail = ()=>{
+
+    const sortedUserList = data.slice().sort((a, b) => {
+    const nameA = a.email.toLowerCase();
+    const nameB = b.email.toLowerCase();
+  
+    if (nameA < nameB) return -1; 
+    if (nameA > nameB) return 1; 
+    return 0; 
+    });
+    setData(sortedUserList);
+
+}
+
+    useEffect(()=>{
+        if(sortParams === 'name'){
+            sortByName()
+        }
+        else if(sortParams === "company"){
+          sortByCompanyName()
+        }
+        else if(sortParams === "email"){
+          sortByEmail()
+        }
+    },[sortParams])
 
     const searchUser = useCallback(() => {
         const names = search.split(" ");
@@ -34,72 +88,6 @@ const UserList = () => {
         }
     },[search])
 
-    const sortByName = (data)=>{
-        data?.sort((a, b) => {
-            // Convert names to lowercase for case-insensitive sorting
-            const nameA = a.firstName.toLowerCase();
-            const nameB = b.firstName.toLowerCase();
-          
-            // Compare the names
-            if (nameA < nameB) return -1; // nameA comes before nameB
-            if (nameA > nameB) return 1; // nameA comes after nameB
-            return 0; // names are equal
-          });
-    }
-
-    const sortByCompanyName = (data)=>{
-        data?.sort((a, b) => {
-            // Convert names to lowercase for case-insensitive sorting
-            const nameA = a.company.name.toLowerCase();
-            const nameB = b.company.name.toLowerCase();
-          
-            // Compare the names
-            if (nameA < nameB) return -1; // nameA comes before nameB
-            if (nameA > nameB) return 1; // nameA comes after nameB
-            return 0; // names are equal
-          });
-    }
-
-    const sortByEmail = (data)=>{
-        data?.sort((a, b) => {
-            // Convert names to lowercase for case-insensitive sorting
-            const nameA = a.email.toLowerCase();
-            const nameB = b.email.toLowerCase();
-          
-            // Compare the names
-            if (nameA < nameB) return -1; // nameA comes before nameB
-            if (nameA > nameB) return 1; // nameA comes after nameB
-            return 0; // names are equal
-          });
-    }
-
-
-    useEffect(()=>{
-        console.log("hi")
-        if(sortParams === 'name'){
-            console.log("name")
-            sortByName(data.users)
-        }
-        else if(sortParams === "company"){
-            console.log("company")
-            sortByCompanyName(data.users)
-        }
-        else if(sortParams === "email"){
-            console.log("email")
-            sortByEmail(data.users)
-        }
-
-    },[sortParams, data])
-    
-    useEffect(() => {
-        console.log("fetch data")
-        const fetchData = async () => {
-          setData(await getUsers())
-          setFilterData([])
-        };
-        fetchData(); 
-    }, []);
-
     useEffect(() => {
         if (search) {
            searchUser(data);
@@ -107,21 +95,12 @@ const UserList = () => {
     }, [data, search, searchUser]);
 
 
-    if(data.length === 0){
-        return(
-            <div className="flex flex-col space-y-1 items-center justify-center h-screen">
-                <img src="/bread.png" className="animate-pulse h-20 w-20 " alt="" />
-                <p className="text-sm text-center text-neutral-500">Loading...</p>
-            </div>
-        )
-    }
-
     return (
         <>
         <div className="pt-20 px-6 pb-6  grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
         {
             !search && filterData.length === 0 &&
-                data?.users?.map(item => (
+                data?.map(item => (
                 <UserItem
                 key={item.id}
                 data={item}
@@ -151,6 +130,11 @@ const UserList = () => {
         </>
    
     )
+}
+
+UserList.propTypes = {
+    data: PropTypes.array,
+    setData: PropTypes.func
 }
 
 export default UserList

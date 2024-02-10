@@ -11,7 +11,7 @@ const Select= ({
     required
 })=>{
     return(
-        <div className='w-24 hidden  md:flex items-center gap-x-2'>
+        <div className='w-24 hidden  sm:flex items-center gap-x-2'>
             {/* <label
             className='text-xs 
             font-medium
@@ -38,8 +38,8 @@ const Select= ({
                         }),
                     }}
                     classNames={{
-                        input: () => 'text-xs rounded-md text-gray-900 ',
-                        control: () =>  'text-xs rounded-md sm:leading-6 '
+                        input: () => 'text-xs rounded-md  text-gray-900 ',
+                        control: (state) =>  `${state.isFocused ? 'border-black text-xs rounded-md sm:leading-6': "border-none text-xs rounded-md sm:leading-6" }`, 
                     }}
                 />
             </div>

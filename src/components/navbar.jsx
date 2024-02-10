@@ -51,10 +51,10 @@ const Navbar = () => {
 
     };
 
-    const onSearch = ()=> {
-        setSearchParams({search: search});
-        disableInput();
-    }
+    // const onSearch = ()=> {
+    //     setSearchParams({search: search});
+    //     disableInput();
+    // }
 
     const handleSort = (value) => {
         setSearchParams({sort: value.value});

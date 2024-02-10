@@ -12,6 +12,7 @@ const CreateUserModal = ({
     onClose
 }) => {
     // const {user: authUser} = useCurrentUser()
+    // eslint-disable-next-line no-unused-vars
     const [isLoading, setIsLoading] = useState(false)
     // const {register, handleSubmit, watch, setValue, formState:{errors}} = useForm({
     //     defaultValues:{
